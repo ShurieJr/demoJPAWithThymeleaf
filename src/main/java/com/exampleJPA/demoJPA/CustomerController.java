@@ -18,44 +18,29 @@ public class CustomerController {
     //requests
     //Get mapping
     @GetMapping("/")
-    public String home() {
-        return "home";
+    public String getHomePage(){
+        return "home"; // view name
     }
-
     @GetMapping("/Register")
-    public String register() {
-        return "RegisterCustomer";
+    public String getRegisterPage(){
+        return "RegisterCustomer"; // view name
     }
-
-    @GetMapping("/all")
-    public ModelAndView getCustomers() {
-        List<Customer> customers = customerService.getAllCustomers();
-        return new ModelAndView("customerList","customer",customers);
+    @RequestMapping("/all")
+    public ModelAndView getAllCustomers(){
+        List<Customer> customerList = customerService.getAllCustomers();
+        return new ModelAndView("viewCustomers",
+                "customer" , customerList);
     }
-
-    @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable int id) {
-        return customerService.getCustomerById(id);
+    @RequestMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable int id){
+        customerService.deleteCustomer(id);
+        return "redirect:/all";
     }
-
     @PostMapping("/save")
-    public String addCustomer(@ModelAttribute Customer customer) {
+    public String saveCustomer(@ModelAttribute Customer customer){
         customerService.addCustomer(customer);
         return "redirect:/all";
     }
 
-    @RequestMapping("/deleteCustomer/{id}")
-    public String deleteCustomer(@PathVariable int id) {
-        customerService.deleteCustomer(id);
-        return "redirect:/all";
-    }
-
-    @RequestMapping("/Edit/{id}")
-    public String updateCustomer(@PathVariable int id,
-                               Model model) {
-      Customer customer = customerService.getCustomerById(id);
-        model.addAttribute("customer", customer);
-        return "EditCustomer";
-    }
 
 }

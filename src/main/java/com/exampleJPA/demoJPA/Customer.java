@@ -12,7 +12,7 @@ import lombok.*;
 @Table(name = "customer")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = true)
     private String name;
