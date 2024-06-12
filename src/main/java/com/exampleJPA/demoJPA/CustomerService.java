@@ -22,7 +22,9 @@ public class CustomerService {
     public void deleteCustomer(int id){
         repository.deleteById(id);
     }
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers(String keyword){
+        if(keyword != null)
+            return repository.search(keyword);
         return repository.findAll();
     }
     public Customer getCustomerById(int id){
